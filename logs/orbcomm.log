@@ -11820,3 +11820,300 @@
 {"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T09:40:29.239Z"}
 {"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T09:40:32.081Z"}
 {"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T09:40:32.082Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T09:41:02.100Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T09:41:02.388Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T09:41:02.388Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T09:41:07.388Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T09:41:07.388Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T09:41:07.389Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T09:41:07.389Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T09:41:08.268Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T09:41:08.269Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T09:41:38.270Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T09:41:38.794Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T09:41:38.794Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T09:41:43.799Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T09:41:43.800Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T09:41:43.800Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T09:41:43.800Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T09:41:44.721Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T09:41:44.722Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T09:42:14.722Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T09:42:15.052Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T09:42:15.052Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T09:42:20.057Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T09:42:20.058Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T09:42:20.058Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T09:42:20.058Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T09:42:21.137Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T09:42:21.138Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T09:42:51.138Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T09:42:51.420Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T09:42:51.420Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T09:42:56.422Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T09:42:56.422Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T09:42:56.422Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T09:42:56.423Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T09:42:57.486Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T09:42:57.487Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T09:43:27.489Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T09:43:27.775Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T09:43:27.776Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T09:43:32.781Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T09:43:32.781Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T09:43:32.781Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T09:43:32.782Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T09:43:33.605Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T09:43:33.606Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T09:45:03.631Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T09:45:03.951Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T09:45:03.951Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T09:45:08.957Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T09:45:08.958Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T09:45:08.958Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T09:45:08.958Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T09:45:09.828Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T09:45:09.829Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T09:46:39.872Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T09:46:40.131Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T09:46:40.132Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T09:46:45.134Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T09:46:45.135Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T09:46:45.135Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T09:46:45.135Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T09:46:46.049Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T09:46:46.050Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T09:48:16.057Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T09:48:16.329Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T09:48:16.329Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T09:48:21.330Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T09:48:21.331Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T09:48:21.331Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T09:48:21.331Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T09:48:22.575Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T09:48:22.575Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T09:49:52.583Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T09:49:52.970Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T09:49:52.971Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T09:49:57.975Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T09:49:57.975Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T09:49:57.975Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T09:49:57.975Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T09:49:58.985Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T09:49:58.986Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T09:50:28.988Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T09:50:29.255Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T09:50:29.255Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T09:50:34.260Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T09:50:34.260Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T09:50:34.260Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T09:50:34.261Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T09:50:35.140Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T09:50:35.140Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T09:52:05.170Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T09:52:05.573Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T09:52:05.573Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T09:52:10.580Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T09:52:10.580Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T09:52:10.580Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T09:52:10.580Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T09:52:11.531Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T09:52:11.531Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T09:53:41.594Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T09:53:41.866Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T09:53:41.867Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T09:53:46.869Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T09:53:46.869Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T09:53:46.870Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T09:53:46.870Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T09:53:47.882Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T09:53:47.883Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:08:00.108Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:08:00.370Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:08:00.370Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:08:05.376Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:08:05.376Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:08:05.376Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:08:05.376Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:08:06.258Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:08:06.258Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:08:36.269Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:08:36.595Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:08:36.595Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:08:41.601Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:08:41.601Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:08:41.601Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:08:41.601Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:08:42.443Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:08:42.444Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:09:12.461Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:09:12.726Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:09:12.726Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:09:17.730Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:09:17.730Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:09:17.731Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:09:17.731Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:09:18.636Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:09:18.639Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:09:48.640Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:09:48.957Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:09:48.957Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:09:53.962Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:09:53.963Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:09:53.965Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:09:53.965Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:09:55.183Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:09:55.184Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:10:25.193Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:10:25.562Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:10:25.562Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:10:30.568Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:10:30.568Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:10:30.568Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:10:30.569Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:10:31.383Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:10:31.384Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:11:01.389Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:11:01.641Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:11:01.641Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:11:06.646Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:11:06.646Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:11:06.646Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:11:06.646Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:11:07.584Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:11:07.584Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:11:37.595Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:11:49.068Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:11:49.069Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:11:54.071Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:11:54.071Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:11:54.072Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:11:54.072Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:11:55.212Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:11:55.213Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:12:25.220Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:12:38.213Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:12:38.214Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:12:43.219Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:12:43.220Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:12:43.220Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:12:43.220Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:12:44.051Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:12:44.052Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:13:14.070Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:13:14.326Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:13:14.326Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:13:19.331Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:13:19.332Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:13:19.332Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:13:19.332Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:13:20.261Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:13:20.262Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:14:50.275Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:14:50.540Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:14:50.541Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:14:55.546Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:14:55.546Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:14:55.546Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:14:55.546Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:14:56.516Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:14:56.517Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:15:26.517Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:15:26.772Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:15:26.773Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:15:31.779Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:15:31.779Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:15:31.779Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:15:31.779Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:15:32.652Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:15:32.653Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:16:02.660Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:16:02.939Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:16:02.940Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:16:07.945Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:16:07.945Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:16:07.946Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:16:07.946Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:16:09.824Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:16:09.824Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:16:39.838Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:16:40.282Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:16:40.283Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:16:45.289Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:16:45.289Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:16:45.289Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:16:45.289Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:16:46.208Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:16:46.208Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:18:16.210Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:18:16.474Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:18:16.474Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:18:21.479Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:18:21.479Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:18:21.479Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:18:21.479Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:18:22.352Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:18:22.352Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:19:52.362Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:19:52.632Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:19:52.632Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:19:57.634Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:19:57.634Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:19:57.634Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:19:57.635Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:19:58.499Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:19:58.500Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:21:28.505Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:21:28.767Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:21:28.767Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:21:33.774Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:21:33.774Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:21:33.774Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:21:33.774Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:21:34.630Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:21:34.630Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:22:04.637Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:22:04.922Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:22:04.923Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:22:09.928Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:22:09.929Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:22:09.929Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:22:09.929Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:22:10.870Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:22:10.871Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:23:40.914Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:23:41.272Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:23:41.272Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:23:46.273Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:23:46.274Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:23:46.274Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:23:46.274Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:23:47.438Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:23:47.439Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:25:17.445Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:25:17.699Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:25:17.699Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:25:22.704Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:25:22.704Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:25:22.705Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:25:22.705Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:25:23.616Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:25:23.616Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:25:53.624Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:25:53.896Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:25:53.897Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:25:58.898Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:25:58.898Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:25:58.899Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:25:58.899Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:25:59.799Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:25:59.800Z"}
+{"level":"warn","message":"Heartbeat timeout detected, reconnecting...","timestamp":"2025-08-28T10:26:29.803Z"}
+{"level":"warn","message":"ORBCOMM WebSocket closed: 1000 - ","timestamp":"2025-08-28T10:26:30.074Z"}
+{"level":"info","message":"Scheduling reconnect attempt 1 in 5000ms","timestamp":"2025-08-28T10:26:30.074Z"}
+{"level":"info","message":"🔗 Attempting to connect to ORBCOMM WebSocket","timestamp":"2025-08-28T10:26:35.079Z"}
+{"level":"info","message":"📡 URL: wss://wamc.wamcentral.net:44355/cdh","timestamp":"2025-08-28T10:26:35.080Z"}
+{"level":"info","message":"🔐 Protocol: cdh.orbcomm.com","timestamp":"2025-08-28T10:26:35.080Z"}
+{"level":"info","message":"🎫 Auth: Basic Y2RoUFRTT0c6Y0...","timestamp":"2025-08-28T10:26:35.080Z"}
+{"level":"info","message":"✅ Connected to ORBCOMM WebSocket successfully","timestamp":"2025-08-28T10:26:35.974Z"}
+{"level":"info","message":"📤 Sent GetEvents request to ORBCOMM","timestamp":"2025-08-28T10:26:35.975Z"}
