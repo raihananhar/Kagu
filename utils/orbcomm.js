@@ -296,9 +296,8 @@ class OrbcommClient {
             console.log(`   🔧 Device: ${transformedEvent.deviceId}`);
             
             // Show primary event type from Events array or fallback to EventClass
-            const eventDisplay = transformedEvent.eventTypes.length > 0 ? 
-              `${transformedEvent.primaryEventType} [${transformedEvent.eventTypes.join(', ')}]` : 
-              transformedEvent.eventClass;
+            // Parse and display specific event types like ORBCOMM dashboard
+            const eventDisplay = this.parseEventDescription(transformedEvent);
             console.log(`   📊 Event: ${eventDisplay}`);
             console.log(`   📈 Status: ${enrichedEvent.status}`);
             
@@ -863,6 +862,67 @@ class OrbcommClient {
     }
     this.isConnected = false;
     this.messageHandlers.clear();
+  }
+
+  parseEventDescription(event) {
+    // Parse specific event types to match ORBCOMM dashboard format
+    if (event.eventTypes && event.eventTypes.length > 0) {
+      const eventDescriptions = event.eventTypes.map(eventType => {
+        switch (eventType) {
+          case 'PWR_ON': return 'Power on';
+          case 'PWR_OFF': return 'Power off';
+          case 'REF_ON': return 'Reefer switched on';
+          case 'REF_OFF': return 'Reefer switched off';
+          case 'SCHEDULED': return 'Scheduled update';
+          case 'REPORTING_DELAY': return 'Reporting delay';
+          case 'DELAYED_REPORT': return 'Reporting delay';
+          case 'GPS_FIX': return 'GPS fix acquired';
+          case 'GPS_LOST': return 'GPS fix lost';
+          case 'GEOFENCE_ENTER': return 'Geofence entered';
+          case 'GEOFENCE_EXIT': return 'Geofence exited';
+          case 'TEMP_ALARM': return 'Temperature alarm';
+          case 'DOOR_OPEN': return 'Door opened';
+          case 'DOOR_CLOSE': return 'Door closed';
+          case 'LOW_BATTERY': return 'Low battery';
+          case 'HEARTBEAT': return 'Heartbeat';
+          case 'MOTION_START': return 'Motion started';
+          case 'MOTION_STOP': return 'Motion stopped';
+          default: return eventType;
+        }
+      });
+      
+      return eventDescriptions.join(', ');
+    }
+    
+    // Fallback: analyze device data and timing for implicit events
+    const descriptions = [];
+    
+    // Check for reporting delay based on event timing
+    const eventTime = new Date(event.eventTimestamp);
+    const receiveTime = new Date(event.receivedTimestamp);
+    const delay = receiveTime - eventTime; // in milliseconds
+    
+    // If event is delayed by more than 5 minutes, it's a reporting delay
+    if (delay > 5 * 60 * 1000) {
+      descriptions.push('Reporting delay');
+    }
+    
+    // Check power status changes
+    if (event.deviceData.extPower !== undefined) {
+      descriptions.push(event.deviceData.extPower ? 'Power on' : 'Power off');
+    }
+    
+    // Check for reefer status
+    if (event.reeferData && (event.reeferData.operatingMode !== undefined || event.reeferData.compressorStatus !== undefined)) {
+      descriptions.push('Reefer update');
+    }
+    
+    // If no specific events found, return generic description
+    if (descriptions.length === 0) {
+      return event.eventClass === 'DeviceMessage' ? 'Scheduled update' : (event.eventClass || 'Device message');
+    }
+    
+    return descriptions.join(', ');
   }
 }
 
