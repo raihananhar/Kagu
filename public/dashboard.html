@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORBCOMM KAGU Fleet Dashboard</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --success-color: #198754;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --dark-bg: #212529;
+            --light-bg: #f8f9fa;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .dashboard-container {
+            padding: 20px 0;
+        }
+
+        .map-container {
+            height: 500px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        .device-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .device-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .device-card.online {
+            border-left: 4px solid var(--success-color);
+        }
+
+        .device-card.offline {
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .device-card.delayed {
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .status-badge {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+        }
+
+        .fleet-stats {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .connection-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--success-color);
+            animation: pulse 2s infinite;
+        }
+
+        .connection-indicator.disconnected {
+            background-color: var(--danger-color);
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .temperature-display {
+            font-size: 0.85rem;
+        }
+
+        .temp-value {
+            font-weight: bold;
+        }
+
+        .temp-normal { color: var(--success-color); }
+        .temp-warning { color: var(--warning-color); }
+        .temp-danger { color: var(--danger-color); }
+
+        .controls-panel {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .device-grid {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        /* Dark theme */
+        body.dark-theme {
+            background-color: var(--dark-bg);
+            color: white;
+        }
+
+        body.dark-theme .fleet-stats,
+        body.dark-theme .controls-panel,
+        body.dark-theme .device-card {
+            background-color: #343a40;
+            color: white;
+        }
+
+        body.dark-theme .navbar {
+            background-color: #343a40 !important;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .map-container {
+                height: 400px;
+                margin-bottom: 20px;
+            }
+            
+            .dashboard-container {
+                padding: 10px 0;
+            }
+            
+            .fleet-stats {
+                margin-bottom: 15px;
+            }
+            
+            .stat-card {
+                padding: 10px;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
+
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+
+        .alert-banner {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 1000;
+            min-width: 300px;
+        }
+
+        .last-update {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+
+        .coordinates {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+
+        .history-panel {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .route-controls {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .date-picker-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .playback-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .history-item {
+            padding: 10px;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .history-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .history-item.active {
+            background-color: #e3f2fd;
+            border-color: #2196f3;
+        }
+
+        .history-time {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .history-location {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        .route-marker {
+            background: white;
+            border: 2px solid #007bff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: #007bff;
+            transition: all 0.15s ease-in-out;
+        }
+
+        .route-marker.start {
+            background: #28a745;
+            border-color: #28a745;
+            color: white;
+        }
+
+        .route-marker.end {
+            background: #dc3545;
+            border-color: #dc3545;
+            color: white;
+        }
+
+        .route-marker.current-position {
+            background: #ffc107;
+            border-color: #ffc107;
+            color: #000;
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.6);
+            animation: pulse-marker 1.5s infinite;
+        }
+
+        .arrow-marker {
+            width: 30px;
+            height: 30px;
+            background: #007bff;
+            border-radius: 50% 50% 50% 0;
+            transform-origin: center;
+            position: relative;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .arrow-marker::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .arrow-marker.moving {
+            background: #28a745;
+            animation: pulse-arrow 1s infinite;
+        }
+
+        .vehicle-marker {
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border-radius: 8px 8px 20px 8px;
+            border: none;
+            box-shadow: none;
+            transform-origin: center;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .vehicle-marker::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+        }
+
+        .route-traveled {
+            stroke: #28a745;
+            stroke-width: 6;
+            stroke-opacity: 0.8;
+        }
+
+        .route-remaining {
+            stroke: #6c757d;
+            stroke-width: 4;
+            stroke-opacity: 0.5;
+            stroke-dasharray: 10, 5;
+        }
+
+        .route-trail {
+            stroke: #007bff;
+            stroke-width: 8;
+            stroke-opacity: 0.3;
+            animation: trail-fade 2s ease-out forwards;
+        }
+
+        @keyframes trail-fade {
+            0% { stroke-opacity: 0.8; stroke-width: 8; }
+            100% { stroke-opacity: 0.1; stroke-width: 3; }
+        }
+
+        @keyframes pulse-arrow {
+            0% { transform: scale(1); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+            50% { transform: scale(1.1); box-shadow: 0 4px 12px rgba(40,167,69,0.5); }
+            100% { transform: scale(1); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        }
+
+        @keyframes pulse-marker {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 193, 7, 0.6); }
+            50% { transform: scale(1.1); box-shadow: 0 0 15px rgba(255, 193, 7, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 193, 7, 0.6); }
+        }
+
+        .route-info {
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-geo-alt-fill"></i>
+                ORBCOMM KAGU Fleet Dashboard
+            </a>
+            <div class="navbar-nav ms-auto">
+                <div class="connection-status">
+                    <div class="connection-indicator" id="connectionIndicator"></div>
+                    <span id="connectionStatus">Connecting...</span>
+                </div>
+                <button class="btn btn-outline-light btn-sm ms-3" id="themeToggle">
+                    <i class="bi bi-moon-fill"></i>
+                </button>
+                <button class="btn btn-outline-light btn-sm ms-2" id="refreshToggle">
+                    <i class="bi bi-arrow-clockwise"></i>
+                    Auto-refresh
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Alert Banner -->
+    <div id="alertBanner" class="alert-banner"></div>
+
+    <!-- Main Dashboard Container -->
+    <div class="container-fluid dashboard-container">
+        <!-- Fleet Overview Stats -->
+        <div class="fleet-stats">
+            <div class="row">
+                <div class="col-md-2 col-6">
+                    <div class="stat-card">
+                        <div class="stat-number text-primary" id="totalDevices">10</div>
+                        <div class="stat-label">Total Devices</div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-6">
+                    <div class="stat-card">
+                        <div class="stat-number text-success" id="onlineDevices">0</div>
+                        <div class="stat-label">Online</div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-6">
+                    <div class="stat-card">
+                        <div class="stat-number text-danger" id="offlineDevices">0</div>
+                        <div class="stat-label">Offline</div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-6">
+                    <div class="stat-card">
+                        <div class="stat-number text-warning" id="delayedDevices">0</div>
+                        <div class="stat-label">Delayed</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="stat-card">
+                        <div class="stat-label">Last Update</div>
+                        <div class="last-update" id="lastUpdate">Never</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls Panel -->
+        <div class="controls-panel">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="autoRefresh" checked>
+                        <label class="form-check-label" for="autoRefresh">
+                            Auto-refresh every 30s
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6 text-end">
+                    <button class="btn btn-primary btn-sm" id="refreshNow">
+                        <i class="bi bi-arrow-clockwise"></i>
+                        Refresh Now
+                    </button>
+                    <button class="btn btn-outline-primary btn-sm" id="centerMap">
+                        <i class="bi bi-geo"></i>
+                        Center Map
+                    </button>
+                    <button class="btn btn-outline-success btn-sm" id="toggleHistory">
+                        <i class="bi bi-clock-history"></i>
+                        History
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Route Controls Panel -->
+        <div class="route-controls hidden" id="routeControls">
+            <h6 class="mb-3">
+                <i class="bi bi-map"></i>
+                Route Tracking
+            </h6>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="date-picker-group">
+                        <label class="form-label">From:</label>
+                        <input type="datetime-local" class="form-control form-control-sm" id="routeFromDate">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="date-picker-group">
+                        <label class="form-label">To:</label>
+                        <input type="datetime-local" class="form-control form-control-sm" id="routeToDate">
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <select class="form-select form-select-sm" id="routeAssetSelect">
+                        <option value="">Select Asset</option>
+                    </select>
+                </div>
+                <div class="col-md-6 text-end">
+                    <button class="btn btn-primary btn-sm" id="loadRoute">
+                        <i class="bi bi-play-circle"></i>
+                        Load Route
+                    </button>
+                    <button class="btn btn-outline-secondary btn-sm" id="clearRoute">
+                        <i class="bi bi-x-circle"></i>
+                        Clear
+                    </button>
+                </div>
+            </div>
+            <div class="playback-controls hidden" id="playbackControls">
+                <button class="btn btn-outline-primary btn-sm" id="playRoute">
+                    <i class="bi bi-play"></i>
+                </button>
+                <button class="btn btn-outline-primary btn-sm" id="pauseRoute">
+                    <i class="bi bi-pause"></i>
+                </button>
+                <button class="btn btn-outline-primary btn-sm" id="stopRoute">
+                    <i class="bi bi-stop"></i>
+                </button>
+                <input type="range" class="form-range" id="routeProgress" min="0" max="100" value="0" style="width: 200px; margin: 0 10px;">
+                <span class="badge bg-info" id="routeProgressText">0/0</span>
+                <div class="speed-controls" style="margin-left: 15px;">
+                    <label class="form-label" style="font-size: 0.8rem; margin-bottom: 2px;">Speed:</label>
+                    <select class="form-select form-select-sm" id="playbackSpeed" style="width: 90px; display: inline-block;">
+                        <option value="2">0.02x</option>
+                        <option value="5">0.05x</option>
+                        <option value="10" selected>0.1x</option>
+                        <option value="25">0.25x</option>
+                        <option value="50">0.5x</option>
+                        <option value="100">1x</option>
+                        <option value="200">2x</option>
+                        <option value="400">4x</option>
+                        <option value="800">8x</option>
+                    </select>
+                </div>
+            </div>
+            <div class="route-info hidden" id="routeInfo">
+                <div class="row">
+                    <div class="col-6">
+                        <small>Total Points: <span id="routeTotalPoints">0</span></small>
+                    </div>
+                    <div class="col-6">
+                        <small>Duration: <span id="routeDuration">0</span></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Row -->
+        <div class="row">
+            <!-- Map Column -->
+            <div class="col-lg-8 col-md-12">
+                <div class="map-container">
+                    <div id="map"></div>
+                </div>
+            </div>
+
+            <!-- Right Panel Column -->
+            <div class="col-lg-4 col-md-12">
+                <!-- Device Grid -->
+                <div class="device-grid" id="devicePanel">
+                    <h5 class="mb-3">
+                        <i class="bi bi-collection"></i>
+                        Fleet Status
+                    </h5>
+                    <div id="deviceGrid">
+                        <!-- Device cards will be populated here -->
+                        <div class="loading-spinner">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History Panel -->
+                <div class="history-panel hidden" id="historyPanel">
+                    <h5 class="mb-3">
+                        <i class="bi bi-clock-history"></i>
+                        Travel History
+                    </h5>
+                    <div class="mb-3">
+                        <select class="form-select form-select-sm" id="historyAssetSelect">
+                            <option value="">Select Asset</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="date" class="form-control form-control-sm" id="historyFromDate">
+                            </div>
+                            <div class="col-6">
+                                <input type="date" class="form-control form-control-sm" id="historyToDate">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-sm mt-2 w-100" id="loadHistory">
+                            Load History
+                        </button>
+                    </div>
+                    <div id="historyList">
+                        <div class="text-center text-muted">
+                            Select an asset and date range to view history
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        class KAGUDashboard {
+            constructor() {
+                this.websocket = null;
+                this.map = null;
+                this.markers = new Map();
+                this.devices = new Map();
+                this.autoRefreshEnabled = true;
+                this.refreshInterval = null;
+                this.isConnected = false;
+                
+                // History and route tracking
+                this.historyMode = false;
+                this.routeMode = false;
+                this.currentRoute = null;
+                this.routePolyline = null;
+                this.routeMarkers = [];
+                this.playbackTimer = null;
+                this.playbackPosition = 0;
+                this.isPlaying = false;
+                
+                // Dynamic route visualization
+                this.traveledRoute = null;
+                this.remainingRoute = null;
+                this.trailSegments = [];
+                this.vehicleMarker = null;
+                
+                // Expected KAGU assets
+                this.expectedAssets = [
+                    'TRIU8784787', 'KAGU3330950', 'KAGU3330820', 'SZLU9721417', 'SZLU3961914',
+                    'KAGU3331180', 'KAGU3331339', 'KAGU3331283', 'KAGU7771228', 'KAGU3331302'
+                ];
+
+                this.init();
+            }
+
+            init() {
+                this.initMap();
+                this.initEventListeners();
+                this.connectWebSocket();
+                this.startAutoRefresh();
+                this.loadInitialData();
+            }
+
+            initMap() {
+                // Initialize map centered on Indonesia
+                this.map = L.map('map').setView([-2.5, 118], 5);
+
+                // Add OpenStreetMap tiles
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(this.map);
+
+                // Add map controls
+                this.map.attributionControl.setPrefix(false);
+            }
+
+            initEventListeners() {
+                // Theme toggle
+                document.getElementById('themeToggle').addEventListener('click', () => {
+                    document.body.classList.toggle('dark-theme');
+                    const icon = document.querySelector('#themeToggle i');
+                    if (document.body.classList.contains('dark-theme')) {
+                        icon.className = 'bi bi-sun-fill';
+                    } else {
+                        icon.className = 'bi bi-moon-fill';
+                    }
+                });
+
+                // History toggle
+                document.getElementById('toggleHistory').addEventListener('click', () => {
+                    this.toggleHistoryMode();
+                });
+
+                // Auto-refresh toggle
+                document.getElementById('autoRefresh').addEventListener('change', (e) => {
+                    this.autoRefreshEnabled = e.target.checked;
+                    if (this.autoRefreshEnabled) {
+                        this.startAutoRefresh();
+                    } else {
+                        this.stopAutoRefresh();
+                    }
+                });
+
+                // Manual refresh
+                document.getElementById('refreshNow').addEventListener('click', () => {
+                    this.refreshData();
+                });
+
+                // Center map
+                document.getElementById('centerMap').addEventListener('click', () => {
+                    this.centerMapOnDevices();
+                });
+
+                // Refresh toggle in navbar
+                document.getElementById('refreshToggle').addEventListener('click', () => {
+                    const checkbox = document.getElementById('autoRefresh');
+                    checkbox.checked = !checkbox.checked;
+                    checkbox.dispatchEvent(new Event('change'));
+                });
+
+                // History event listeners
+                document.getElementById('loadHistory').addEventListener('click', () => {
+                    this.loadAssetHistory();
+                });
+
+                document.getElementById('historyAssetSelect').addEventListener('change', () => {
+                    this.clearHistoryList();
+                });
+
+                // Route tracking event listeners
+                document.getElementById('loadRoute').addEventListener('click', () => {
+                    this.loadAssetRoute();
+                });
+
+                document.getElementById('clearRoute').addEventListener('click', () => {
+                    this.clearRoute();
+                });
+
+                document.getElementById('playRoute').addEventListener('click', () => {
+                    this.playRoute();
+                });
+
+                document.getElementById('pauseRoute').addEventListener('click', () => {
+                    this.pauseRoute();
+                });
+
+                document.getElementById('stopRoute').addEventListener('click', () => {
+                    this.stopRoute();
+                });
+
+                document.getElementById('routeProgress').addEventListener('input', (e) => {
+                    this.setRoutePosition(parseInt(e.target.value));
+                });
+
+                // Set default dates
+                this.setDefaultDates();
+            }
+
+            connectWebSocket() {
+                const wsUrl = `ws://${window.location.hostname}:${window.location.port || 3000}/ws/kagu?apiKey=api_key_kagu_12345`;
+                
+                try {
+                    this.websocket = new WebSocket(wsUrl);
+                    
+                    this.websocket.onopen = () => {
+                        console.log('WebSocket connected');
+                        this.isConnected = true;
+                        this.updateConnectionStatus('Connected', true);
+                    };
+
+                    this.websocket.onmessage = (event) => {
+                        const data = JSON.parse(event.data);
+                        this.handleWebSocketMessage(data);
+                    };
+
+                    this.websocket.onclose = () => {
+                        console.log('WebSocket disconnected');
+                        this.isConnected = false;
+                        this.updateConnectionStatus('Disconnected', false);
+                        
+                        // Attempt to reconnect after 5 seconds
+                        setTimeout(() => {
+                            this.connectWebSocket();
+                        }, 5000);
+                    };
+
+                    this.websocket.onerror = (error) => {
+                        console.error('WebSocket error:', error);
+                        this.updateConnectionStatus('Error', false);
+                    };
+
+                } catch (error) {
+                    console.error('Failed to connect WebSocket:', error);
+                    this.updateConnectionStatus('Failed', false);
+                }
+            }
+
+            handleWebSocketMessage(data) {
+                if (data.type === 'connection') {
+                    console.log('WebSocket connection confirmed:', data);
+                    this.showAlert('WebSocket connected successfully', 'success');
+                } else if (data.type === 'heartbeat') {
+                    // Handle heartbeat
+                    console.log('Heartbeat received');
+                } else if (data.assetId) {
+                    // Real-time asset update
+                    this.updateDevice(data);
+                    this.showAlert(`${data.assetId} updated`, 'info', 2000);
+                }
+            }
+
+            async loadInitialData() {
+                try {
+                    // Load all assets data
+                    const response = await fetch('/api/kagu/assets/all', {
+                        headers: {
+                            'X-API-Key': 'api_key_kagu_12345'
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.processAssetsData(data.assets);
+                        this.updateFleetStats();
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                } catch (error) {
+                    console.error('Failed to load initial data:', error);
+                    this.showAlert('Failed to load initial data', 'danger');
+                    this.createPlaceholderDevices();
+                }
+            }
+
+            processAssetsData(assets) {
+                // Process each asset
+                assets.forEach(asset => {
+                    this.devices.set(asset.assetId, asset);
+                });
+
+                // Ensure all expected assets are represented
+                this.expectedAssets.forEach(assetId => {
+                    if (!this.devices.has(assetId)) {
+                        this.devices.set(assetId, {
+                            assetId: assetId,
+                            status: 'never_seen',
+                            lastUpdate: null,
+                            gpsData: { hasGPS: false },
+                            deviceData: { batteryVoltage: null, rssi: null },
+                            reeferData: { hasReeferData: false }
+                        });
+                    }
+                });
+
+                this.updateMapMarkers();
+                this.updateDeviceGrid();
+                this.updateFleetStats();
+                this.updateLastUpdate();
+            }
+
+            updateDevice(deviceData) {
+                this.devices.set(deviceData.assetId, deviceData);
+                this.updateMapMarkers();
+                this.updateDeviceGrid();
+                this.updateFleetStats();
+                this.updateLastUpdate();
+            }
+
+            updateMapMarkers() {
+                // Clear existing markers
+                this.markers.forEach(marker => {
+                    this.map.removeLayer(marker);
+                });
+                this.markers.clear();
+
+                // Add markers for devices with GPS
+                this.devices.forEach((device, assetId) => {
+                    if (device.gpsData && device.gpsData.hasGPS) {
+                        const lat = device.gpsData.latitude;
+                        const lng = device.gpsData.longitude;
+
+                        // Choose marker color based on status
+                        let markerColor = '#6c757d'; // gray for unknown
+                        if (device.status === 'online') markerColor = '#198754'; // green
+                        else if (device.status === 'offline') markerColor = '#dc3545'; // red
+                        else if (device.status === 'delayed') markerColor = '#ffc107'; // yellow
+
+                        // Create custom marker (use arrow style for better visibility)
+                        const marker = L.marker([lat, lng], {
+                            icon: L.divIcon({
+                                className: 'arrow-marker',
+                                html: '',
+                                iconSize: [25, 25],
+                                iconAnchor: [12.5, 12.5]
+                            })
+                        }).addTo(this.map);
+                        
+                        // Set marker color based on status
+                        const markerElement = marker.getElement();
+                        if (markerElement) {
+                            markerElement.style.background = markerColor;
+                        }
+
+                        // Add popup with device details
+                        const popupContent = this.createMarkerPopup(device);
+                        marker.bindPopup(popupContent);
+
+                        // Add tooltip with asset ID
+                        marker.bindTooltip(assetId, {
+                            permanent: true,
+                            direction: 'top',
+                            className: 'marker-tooltip'
+                        });
+
+                        this.markers.set(assetId, marker);
+                    }
+                });
+            }
+
+            createMarkerPopup(device) {
+                const lastUpdate = device.lastUpdate ? 
+                    new Date(device.lastUpdate).toLocaleString() : 'Never';
+
+                let temperatureInfo = 'No reefer data';
+                if (device.reeferData && device.reeferData.hasReeferData) {
+                    temperatureInfo = `
+                        Ambient: ${device.reeferData.ambientTemp || 'N/A'}°C<br>
+                        Set Point: ${device.reeferData.setTemp || 'N/A'}°C<br>
+                        Supply: ${device.reeferData.supplyTemp1 || 'N/A'}°C<br>
+                        Return: ${device.reeferData.returnTemp1 || 'N/A'}°C
+                    `;
+                }
+
+                return `
+                    <div style="min-width: 200px;">
+                        <h6><strong>${device.assetId}</strong></h6>
+                        <p class="mb-1">
+                            <span class="badge bg-${this.getStatusColor(device.status)}">${device.status}</span>
+                        </p>
+                        <p class="mb-1">
+                            <i class="bi bi-geo-alt"></i>
+                            ${device.gpsData.latitude.toFixed(6)}, ${device.gpsData.longitude.toFixed(6)}
+                        </p>
+                        <p class="mb-1">
+                            <i class="bi bi-thermometer-half"></i>
+                            ${temperatureInfo}
+                        </p>
+                        <p class="mb-1">
+                            <i class="bi bi-battery"></i>
+                            ${device.deviceData.batteryVoltage || 'N/A'}V
+                        </p>
+                        <p class="mb-0">
+                            <i class="bi bi-clock"></i>
+                            ${lastUpdate}
+                        </p>
+                    </div>
+                `;
+            }
+
+            updateDeviceGrid() {
+                const grid = document.getElementById('deviceGrid');
+                
+                let html = '';
+                this.expectedAssets.forEach(assetId => {
+                    const device = this.devices.get(assetId) || {
+                        assetId: assetId,
+                        status: 'never_seen',
+                        lastUpdate: null,
+                        gpsData: { hasGPS: false },
+                        deviceData: {},
+                        reeferData: { hasReeferData: false }
+                    };
+
+                    html += this.createDeviceCard(device);
+                });
+
+                grid.innerHTML = html;
+
+                // Add click listeners to device cards
+                grid.querySelectorAll('.device-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const assetId = card.dataset.assetId;
+                        this.focusOnDevice(assetId);
+                    });
+                });
+            }
+
+            createDeviceCard(device) {
+                const statusClass = this.getStatusClass(device.status);
+                const statusColor = this.getStatusColor(device.status);
+                const lastUpdate = device.lastUpdate ? 
+                    new Date(device.lastUpdate).toLocaleString() : 'Never';
+
+                let coordinates = 'No GPS data';
+                if (device.gpsData && device.gpsData.hasGPS) {
+                    coordinates = `${device.gpsData.latitude.toFixed(4)}, ${device.gpsData.longitude.toFixed(4)}`;
+                }
+
+                let temperatureDisplay = '';
+                if (device.reeferData && device.reeferData.hasReeferData) {
+                    temperatureDisplay = `
+                        <div class="temperature-display mt-2">
+                            <div class="row">
+                                <div class="col-6">
+                                    <small>Ambient:</small>
+                                    <span class="temp-value ${this.getTempClass(device.reeferData.ambientTemp)}">${device.reeferData.ambientTemp || 'N/A'}°C</span>
+                                </div>
+                                <div class="col-6">
+                                    <small>Set:</small>
+                                    <span class="temp-value">${device.reeferData.setTemp || 'N/A'}°C</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <small>Supply:</small>
+                                    <span class="temp-value ${this.getTempClass(device.reeferData.supplyTemp1)}">${device.reeferData.supplyTemp1 || 'N/A'}°C</span>
+                                </div>
+                                <div class="col-6">
+                                    <small>Return:</small>
+                                    <span class="temp-value ${this.getTempClass(device.reeferData.returnTemp1)}">${device.reeferData.returnTemp1 || 'N/A'}°C</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="card device-card ${statusClass}" data-asset-id="${device.assetId}">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h6 class="card-title mb-1">${device.assetId}</h6>
+                                <span class="badge bg-${statusColor} status-badge">${device.status}</span>
+                            </div>
+                            <div class="coordinates mb-2">${coordinates}</div>
+                            <div class="d-flex justify-content-between text-muted">
+                                <small>
+                                    <i class="bi bi-battery"></i>
+                                    ${device.deviceData.batteryVoltage || 'N/A'}V
+                                </small>
+                                <small>
+                                    <i class="bi bi-signal"></i>
+                                    ${device.deviceData.rssi || 'N/A'}dBm
+                                </small>
+                            </div>
+                            ${temperatureDisplay}
+                            <div class="last-update mt-2">
+                                <small>Last: ${lastUpdate}</small>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            updateFleetStats() {
+                let online = 0, offline = 0, delayed = 0;
+
+                this.devices.forEach(device => {
+                    if (device.status === 'online') online++;
+                    else if (device.status === 'offline') offline++;
+                    else if (device.status === 'delayed') delayed++;
+                });
+
+                document.getElementById('onlineDevices').textContent = online;
+                document.getElementById('offlineDevices').textContent = offline;
+                document.getElementById('delayedDevices').textContent = delayed;
+            }
+
+            updateConnectionStatus(status, connected) {
+                const indicator = document.getElementById('connectionIndicator');
+                const statusText = document.getElementById('connectionStatus');
+                
+                statusText.textContent = status;
+                
+                if (connected) {
+                    indicator.classList.remove('disconnected');
+                } else {
+                    indicator.classList.add('disconnected');
+                }
+            }
+
+            updateLastUpdate() {
+                const now = new Date().toLocaleString();
+                document.getElementById('lastUpdate').textContent = now;
+            }
+
+            focusOnDevice(assetId) {
+                const marker = this.markers.get(assetId);
+                if (marker) {
+                    this.map.setView(marker.getLatLng(), 10);
+                    marker.openPopup();
+                } else {
+                    this.showAlert(`${assetId} location not available`, 'warning');
+                }
+            }
+
+            centerMapOnDevices() {
+                if (this.markers.size > 0) {
+                    const group = new L.featureGroup([...this.markers.values()]);
+                    this.map.fitBounds(group.getBounds().pad(0.1));
+                } else {
+                    // Center on Indonesia if no markers
+                    this.map.setView([-2.5, 118], 5);
+                }
+            }
+
+            async refreshData() {
+                try {
+                    const response = await fetch('/api/kagu/assets/all', {
+                        headers: {
+                            'X-API-Key': 'api_key_kagu_12345'
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.processAssetsData(data.assets);
+                        this.showAlert('Data refreshed successfully', 'success', 2000);
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                } catch (error) {
+                    console.error('Failed to refresh data:', error);
+                    this.showAlert('Failed to refresh data', 'danger');
+                }
+            }
+
+            startAutoRefresh() {
+                this.stopAutoRefresh(); // Clear any existing interval
+                if (this.autoRefreshEnabled) {
+                    this.refreshInterval = setInterval(() => {
+                        this.refreshData();
+                    }, 30000); // 30 seconds
+                }
+            }
+
+            stopAutoRefresh() {
+                if (this.refreshInterval) {
+                    clearInterval(this.refreshInterval);
+                    this.refreshInterval = null;
+                }
+            }
+
+            createPlaceholderDevices() {
+                // Create placeholder devices when API is not available
+                this.expectedAssets.forEach(assetId => {
+                    this.devices.set(assetId, {
+                        assetId: assetId,
+                        status: 'never_seen',
+                        lastUpdate: null,
+                        gpsData: { hasGPS: false },
+                        deviceData: {},
+                        reeferData: { hasReeferData: false }
+                    });
+                });
+
+                this.updateDeviceGrid();
+                this.updateFleetStats();
+            }
+
+            showAlert(message, type = 'info', duration = 5000) {
+                const banner = document.getElementById('alertBanner');
+                const alertHtml = `
+                    <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                        ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                `;
+                banner.innerHTML = alertHtml;
+
+                if (duration > 0) {
+                    setTimeout(() => {
+                        const alert = banner.querySelector('.alert');
+                        if (alert) {
+                            const bsAlert = new bootstrap.Alert(alert);
+                            bsAlert.close();
+                        }
+                    }, duration);
+                }
+            }
+
+            getStatusClass(status) {
+                switch (status) {
+                    case 'online': return 'online';
+                    case 'offline': return 'offline';
+                    case 'delayed': return 'delayed';
+                    default: return 'offline';
+                }
+            }
+
+            getStatusColor(status) {
+                switch (status) {
+                    case 'online': return 'success';
+                    case 'offline': return 'danger';
+                    case 'delayed': return 'warning';
+                    default: return 'secondary';
+                }
+            }
+
+            getTempClass(temp) {
+                if (temp === null || temp === undefined) return '';
+                if (temp < -10 || temp > 40) return 'temp-danger';
+                if (temp < 0 || temp > 30) return 'temp-warning';
+                return 'temp-normal';
+            }
+
+            // Calculate bearing between two GPS points
+            calculateBearing(lat1, lng1, lat2, lng2) {
+                const dLng = (lng2 - lng1) * Math.PI / 180;
+                const lat1Rad = lat1 * Math.PI / 180;
+                const lat2Rad = lat2 * Math.PI / 180;
+                
+                const y = Math.sin(dLng) * Math.cos(lat2Rad);
+                const x = Math.cos(lat1Rad) * Math.sin(lat2Rad) - 
+                         Math.sin(lat1Rad) * Math.cos(lat2Rad) * Math.cos(dLng);
+                
+                let bearing = Math.atan2(y, x) * 180 / Math.PI;
+                return (bearing + 360) % 360; // Normalize to 0-360 degrees
+            }
+
+            // Get direction arrow rotation based on bearing
+            getBearingRotation(bearing) {
+                return bearing - 45; // Adjust for teardrop shape pointing northeast by default
+            }
+
+            // Get compass direction from bearing
+            getCompassDirection(bearing) {
+                const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+                const index = Math.round(bearing / 45) % 8;
+                return directions[index];
+            }
+
+            // History and Route Tracking Methods
+            toggleHistoryMode() {
+                this.historyMode = !this.historyMode;
+                
+                const historyPanel = document.getElementById('historyPanel');
+                const devicePanel = document.getElementById('devicePanel');
+                const routeControls = document.getElementById('routeControls');
+                const toggleBtn = document.getElementById('toggleHistory');
+                
+                if (this.historyMode) {
+                    historyPanel.classList.remove('hidden');
+                    devicePanel.classList.add('hidden');
+                    routeControls.classList.remove('hidden');
+                    toggleBtn.innerHTML = '<i class="bi bi-collection"></i> Fleet';
+                    this.routeMode = true;
+                    this.populateAssetSelects();
+                } else {
+                    historyPanel.classList.add('hidden');
+                    devicePanel.classList.remove('hidden');
+                    routeControls.classList.add('hidden');
+                    toggleBtn.innerHTML = '<i class="bi bi-clock-history"></i> History';
+                    this.routeMode = false;
+                    this.clearRoute();
+                }
+            }
+
+            populateAssetSelects() {
+                const historySelect = document.getElementById('historyAssetSelect');
+                const routeSelect = document.getElementById('routeAssetSelect');
+                
+                // Clear existing options
+                historySelect.innerHTML = '<option value="">Select Asset</option>';
+                routeSelect.innerHTML = '<option value="">Select Asset</option>';
+                
+                // Add assets
+                this.expectedAssets.forEach(assetId => {
+                    const historyOption = document.createElement('option');
+                    historyOption.value = assetId;
+                    historyOption.textContent = assetId;
+                    historySelect.appendChild(historyOption);
+                    
+                    const routeOption = document.createElement('option');
+                    routeOption.value = assetId;
+                    routeOption.textContent = assetId;
+                    routeSelect.appendChild(routeOption);
+                });
+            }
+
+            setDefaultDates() {
+                const now = new Date();
+                const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+                
+                // History dates (date only)
+                document.getElementById('historyFromDate').value = yesterday.toISOString().split('T')[0];
+                document.getElementById('historyToDate').value = now.toISOString().split('T')[0];
+                
+                // Route dates (datetime-local)
+                const formatForDatetimeLocal = (date) => {
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const hours = String(date.getHours()).padStart(2, '0');
+                    const minutes = String(date.getMinutes()).padStart(2, '0');
+                    return `${year}-${month}-${day}T${hours}:${minutes}`;
+                };
+                
+                document.getElementById('routeFromDate').value = formatForDatetimeLocal(yesterday);
+                document.getElementById('routeToDate').value = formatForDatetimeLocal(now);
+            }
+
+            async loadAssetHistory() {
+                const assetId = document.getElementById('historyAssetSelect').value;
+                const fromDate = document.getElementById('historyFromDate').value;
+                const toDate = document.getElementById('historyToDate').value;
+                
+                if (!assetId) {
+                    this.showAlert('Please select an asset', 'warning');
+                    return;
+                }
+                
+                if (!fromDate || !toDate) {
+                    this.showAlert('Please select date range', 'warning');
+                    return;
+                }
+                
+                try {
+                    const fromDateTime = new Date(fromDate + 'T00:00:00').toISOString();
+                    const toDateTime = new Date(toDate + 'T23:59:59').toISOString();
+                    
+                    const response = await fetch(`/api/kagu/asset/${assetId}/track?from=${fromDateTime}&to=${toDateTime}`, {
+                        headers: {
+                            'X-API-Key': 'api_key_kagu_12345'
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.displayHistory(data.track);
+                        this.showAlert(`Loaded ${data.track.length} history points`, 'success', 2000);
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                } catch (error) {
+                    console.error('Error loading history:', error);
+                    this.showAlert('Failed to load history', 'danger');
+                }
+            }
+
+            displayHistory(historyData) {
+                const historyList = document.getElementById('historyList');
+                
+                if (!historyData || historyData.length === 0) {
+                    historyList.innerHTML = '<div class="text-center text-muted">No history data found</div>';
+                    return;
+                }
+                
+                historyList.innerHTML = '';
+                
+                historyData.forEach((point, index) => {
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    historyItem.innerHTML = `
+                        <div class="history-time">${new Date(point.timestamp).toLocaleString()}</div>
+                        <div class="history-location">${point.latitude.toFixed(6)}, ${point.longitude.toFixed(6)}</div>
+                        <div class="text-muted small">${point.eventType || 'Position Update'}</div>
+                    `;
+                    
+                    historyItem.addEventListener('click', () => {
+                        // Remove active class from all items
+                        document.querySelectorAll('.history-item').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        
+                        // Add active class to clicked item
+                        historyItem.classList.add('active');
+                        
+                        // Focus on this location on map
+                        this.map.setView([point.latitude, point.longitude], 15);
+                        
+                        // Add temporary marker
+                        if (this.tempMarker) {
+                            this.map.removeLayer(this.tempMarker);
+                        }
+                        
+                        this.tempMarker = L.marker([point.latitude, point.longitude], {
+                            icon: L.divIcon({
+                                className: 'route-marker',
+                                html: (index + 1).toString(),
+                                iconSize: [20, 20]
+                            })
+                        }).addTo(this.map);
+                        
+                        this.tempMarker.bindPopup(`
+                            <b>Point ${index + 1}</b><br>
+                            Time: ${new Date(point.timestamp).toLocaleString()}<br>
+                            Location: ${point.latitude.toFixed(6)}, ${point.longitude.toFixed(6)}
+                        `).openPopup();
+                    });
+                    
+                    historyList.appendChild(historyItem);
+                });
+            }
+
+            clearHistoryList() {
+                document.getElementById('historyList').innerHTML = '<div class="text-center text-muted">Select an asset and date range to view history</div>';
+                
+                if (this.tempMarker) {
+                    this.map.removeLayer(this.tempMarker);
+                    this.tempMarker = null;
+                }
+            }
+
+            async loadAssetRoute() {
+                const assetId = document.getElementById('routeAssetSelect').value;
+                const fromDate = document.getElementById('routeFromDate').value;
+                const toDate = document.getElementById('routeToDate').value;
+                
+                if (!assetId) {
+                    this.showAlert('Please select an asset', 'warning');
+                    return;
+                }
+                
+                if (!fromDate || !toDate) {
+                    this.showAlert('Please select date range', 'warning');
+                    return;
+                }
+                
+                try {
+                    const fromDateTime = new Date(fromDate).toISOString();
+                    const toDateTime = new Date(toDate).toISOString();
+                    
+                    const response = await fetch(`/api/kagu/asset/${assetId}/track?from=${fromDateTime}&to=${toDateTime}`, {
+                        headers: {
+                            'X-API-Key': 'api_key_kagu_12345'
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.displayRoute(data.track, assetId);
+                        this.showAlert(`Loaded route with ${data.track.length} points`, 'success', 2000);
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                } catch (error) {
+                    console.error('Error loading route:', error);
+                    this.showAlert('Failed to load route', 'danger');
+                }
+            }
+
+            displayRoute(routeData, assetId) {
+                this.clearRoute();
+                
+                if (!routeData || routeData.length === 0) {
+                    this.showAlert('No route data found', 'warning');
+                    return;
+                }
+                
+                this.currentRoute = routeData;
+                
+                // Create complete route as remaining (gray dashed)
+                const latlngs = routeData.map(point => [point.latitude, point.longitude]);
+                
+                this.remainingRoute = L.polyline(latlngs, {
+                    className: 'route-remaining',
+                    color: '#6c757d',
+                    weight: 4,
+                    opacity: 0.5,
+                    dashArray: '10, 5'
+                }).addTo(this.map);
+                
+                // Create traveled route (initially empty)
+                this.traveledRoute = L.polyline([], {
+                    className: 'route-traveled',
+                    color: '#28a745',
+                    weight: 6,
+                    opacity: 0.8
+                }).addTo(this.map);
+                
+                // Create vehicle marker at start position
+                if (routeData.length > 0) {
+                    const startPoint = routeData[0];
+                    
+                    this.vehicleMarker = L.marker([startPoint.latitude, startPoint.longitude], {
+                        icon: L.divIcon({
+                            className: 'vehicle-marker',
+                            html: '',
+                            iconSize: [40, 40],
+                            iconAnchor: [20, 20]
+                        })
+                    }).addTo(this.map);
+                    
+                    this.vehicleMarker.bindPopup(`
+                        <b>${assetId}</b><br>
+                        Ready to start journey<br>
+                        Route: ${routeData.length} points
+                    `);
+                    
+                    // Add start and end markers
+                    const startMarker = L.marker([startPoint.latitude, startPoint.longitude], {
+                        icon: L.divIcon({
+                            className: 'route-marker start',
+                            html: 'S',
+                            iconSize: [20, 20]
+                        })
+                    }).addTo(this.map);
+                    
+                    const endPoint = routeData[routeData.length - 1];
+                    const endMarker = L.marker([endPoint.latitude, endPoint.longitude], {
+                        icon: L.divIcon({
+                            className: 'route-marker end',
+                            html: 'E',
+                            iconSize: [20, 20]
+                        })
+                    }).addTo(this.map);
+                    
+                    this.routeMarkers.push(startMarker, endMarker);
+                }
+                
+                // Fit map to route
+                this.map.fitBounds(this.remainingRoute.getBounds());
+                
+                // Show route info and playback controls
+                this.updateRouteInfo();
+                document.getElementById('playbackControls').classList.remove('hidden');
+                document.getElementById('routeInfo').classList.remove('hidden');
+                
+                // Reset playback
+                this.playbackPosition = 0;
+                this.updatePlaybackProgress();
+            }
+
+            updateRouteInfo() {
+                if (!this.currentRoute) return;
+                
+                const totalPoints = this.currentRoute.length;
+                const startTime = new Date(this.currentRoute[0].timestamp);
+                const endTime = new Date(this.currentRoute[totalPoints - 1].timestamp);
+                const duration = Math.round((endTime - startTime) / (1000 * 60)); // minutes
+                
+                document.getElementById('routeTotalPoints').textContent = totalPoints;
+                document.getElementById('routeDuration').textContent = `${duration} minutes`;
+            }
+
+            clearRoute() {
+                // Clear traditional route elements
+                if (this.routePolyline) {
+                    this.map.removeLayer(this.routePolyline);
+                    this.routePolyline = null;
+                }
+                
+                // Clear dynamic route elements
+                if (this.traveledRoute) {
+                    this.map.removeLayer(this.traveledRoute);
+                    this.traveledRoute = null;
+                }
+                
+                if (this.remainingRoute) {
+                    this.map.removeLayer(this.remainingRoute);
+                    this.remainingRoute = null;
+                }
+                
+                if (this.vehicleMarker) {
+                    this.map.removeLayer(this.vehicleMarker);
+                    this.vehicleMarker = null;
+                }
+                
+                // Clear trail segments
+                this.trailSegments.forEach(trail => {
+                    if (this.map.hasLayer(trail)) {
+                        this.map.removeLayer(trail);
+                    }
+                });
+                this.trailSegments = [];
+                
+                // Clear route markers
+                this.routeMarkers.forEach(marker => {
+                    this.map.removeLayer(marker);
+                });
+                this.routeMarkers = [];
+                
+                // Clear old marker (backward compatibility)
+                if (this.currentMarker) {
+                    this.map.removeLayer(this.currentMarker);
+                    this.currentMarker = null;
+                }
+                
+                this.stopRoute();
+                this.currentRoute = null;
+                
+                document.getElementById('playbackControls').classList.add('hidden');
+                document.getElementById('routeInfo').classList.add('hidden');
+            }
+
+            playRoute() {
+                if (!this.currentRoute || this.isPlaying) return;
+                
+                this.isPlaying = true;
+                let lastFrameTime = performance.now();
+                
+                const animate = (currentTime) => {
+                    if (!this.isPlaying) return;
+                    
+                    const deltaTime = currentTime - lastFrameTime;
+                    const speedMultiplier = parseInt(document.getElementById('playbackSpeed').value) || 200;
+                    const frameInterval = Math.max(1000 / speedMultiplier, 16); // Minimum 60fps
+                    
+                    if (deltaTime >= frameInterval) {
+                        if (this.playbackPosition >= this.currentRoute.length - 1) {
+                            this.stopRoute();
+                            return;
+                        }
+                        
+                        this.playbackPosition++;
+                        this.updatePlaybackProgress();
+                        this.showCurrentPosition();
+                        lastFrameTime = currentTime;
+                    }
+                    
+                    if (this.isPlaying) {
+                        this.playbackTimer = requestAnimationFrame(animate);
+                    }
+                };
+                
+                this.playbackTimer = requestAnimationFrame(animate);
+            }
+
+            pauseRoute() {
+                if (this.playbackTimer) {
+                    cancelAnimationFrame(this.playbackTimer);
+                    this.playbackTimer = null;
+                }
+                this.isPlaying = false;
+            }
+
+            stopRoute() {
+                this.pauseRoute();
+                this.playbackPosition = 0;
+                this.updatePlaybackProgress();
+                
+                if (this.currentMarker) {
+                    this.map.removeLayer(this.currentMarker);
+                    this.currentMarker = null;
+                }
+            }
+
+            setRoutePosition(position) {
+                if (!this.currentRoute) return;
+                
+                this.pauseRoute();
+                this.playbackPosition = Math.floor((position / 100) * (this.currentRoute.length - 1));
+                this.updatePlaybackProgress();
+                this.showCurrentPosition();
+            }
+
+            updatePlaybackProgress() {
+                if (!this.currentRoute) return;
+                
+                const progress = (this.playbackPosition / (this.currentRoute.length - 1)) * 100;
+                document.getElementById('routeProgress').value = progress;
+                document.getElementById('routeProgressText').textContent = `${this.playbackPosition + 1}/${this.currentRoute.length}`;
+            }
+
+            showCurrentPosition() {
+                if (!this.currentRoute || this.playbackPosition >= this.currentRoute.length) return;
+                
+                const currentPoint = this.currentRoute[this.playbackPosition];
+                const lat = currentPoint.latitude;
+                const lng = currentPoint.longitude;
+                
+                // Calculate bearing for direction arrow
+                let bearing = 0;
+                if (this.playbackPosition < this.currentRoute.length - 1) {
+                    const nextPoint = this.currentRoute[this.playbackPosition + 1];
+                    bearing = this.calculateBearing(lat, lng, nextPoint.latitude, nextPoint.longitude);
+                } else if (this.playbackPosition > 0) {
+                    const prevPoint = this.currentRoute[this.playbackPosition - 1];
+                    bearing = this.calculateBearing(prevPoint.latitude, prevPoint.longitude, lat, lng);
+                }
+                
+                // Update vehicle marker position and rotation
+                if (this.vehicleMarker) {
+                    this.vehicleMarker.setLatLng([lat, lng]);
+                    
+                    // Rotate vehicle based on direction
+                    const markerElement = this.vehicleMarker.getElement();
+                    if (markerElement) {
+                        markerElement.style.transform = `rotate(${bearing}deg)`;
+                        markerElement.style.transition = 'transform 0.2s ease-out';
+                    }
+                    
+                    this.vehicleMarker.bindPopup(`
+                        <b>Vehicle Position</b><br>
+                        Time: ${new Date(currentPoint.timestamp).toLocaleString()}<br>
+                        Location: ${lat.toFixed(6)}, ${lng.toFixed(6)}<br>
+                        Direction: ${Math.round(bearing)}° ${this.getCompassDirection(bearing)}<br>
+                        Progress: ${this.playbackPosition + 1}/${this.currentRoute.length}
+                    `);
+                }
+                
+                // Update traveled route (green line behind vehicle)
+                if (this.traveledRoute && this.playbackPosition > 0) {
+                    const traveledPoints = this.currentRoute.slice(0, this.playbackPosition + 1)
+                        .map(point => [point.latitude, point.longitude]);
+                    this.traveledRoute.setLatLngs(traveledPoints);
+                }
+                
+                // Update remaining route (remove traveled portion)
+                if (this.remainingRoute && this.playbackPosition < this.currentRoute.length - 1) {
+                    const remainingPoints = this.currentRoute.slice(this.playbackPosition)
+                        .map(point => [point.latitude, point.longitude]);
+                    this.remainingRoute.setLatLngs(remainingPoints);
+                }
+                
+                // Add fading trail effect for recent path
+                this.addTrailEffect(lat, lng);
+                
+                // Smooth pan to follow vehicle
+                this.map.panTo([lat, lng], {
+                    animate: true,
+                    duration: 0.15
+                });
+            }
+
+            addTrailEffect(lat, lng) {
+                // Add a short trail segment that will fade out
+                if (this.playbackPosition > 0) {
+                    const prevPoint = this.currentRoute[this.playbackPosition - 1];
+                    
+                    const trailSegment = L.polyline([
+                        [prevPoint.latitude, prevPoint.longitude],
+                        [lat, lng]
+                    ], {
+                        className: 'route-trail',
+                        color: '#007bff',
+                        weight: 8,
+                        opacity: 0.8
+                    }).addTo(this.map);
+                    
+                    this.trailSegments.push(trailSegment);
+                    
+                    // Remove trail after animation completes
+                    setTimeout(() => {
+                        if (this.map.hasLayer(trailSegment)) {
+                            this.map.removeLayer(trailSegment);
+                        }
+                        const index = this.trailSegments.indexOf(trailSegment);
+                        if (index > -1) {
+                            this.trailSegments.splice(index, 1);
+                        }
+                    }, 2000);
+                }
+                
+                // Limit trail segments to prevent memory issues
+                if (this.trailSegments.length > 10) {
+                    const oldTrail = this.trailSegments.shift();
+                    if (this.map.hasLayer(oldTrail)) {
+                        this.map.removeLayer(oldTrail);
+                    }
+                }
+            }
+        }
+
+        // Initialize dashboard when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            window.dashboard = new KAGUDashboard();
+        });
+    </script>
+</body>
+</html>
