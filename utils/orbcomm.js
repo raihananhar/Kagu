@@ -35,7 +35,7 @@ class OrbcommClient {
     this.lastEventTime = null;
     this.lastEventId = '';
     this.maxEventCount = 5000; // Increased for historical data
-    this.offlineThreshold = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+    this.offlineThreshold = 15 * 60 * 1000; // 15 minutes in milliseconds
   }
 
   connect() {

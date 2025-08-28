@@ -345,12 +345,12 @@
         }
 
         .vehicle-marker {
-            width: 40px;
-            height: 40px;
-            background: transparent;
-            border-radius: 8px 8px 20px 8px;
-            border: none;
-            box-shadow: none;
+            width: 25px;
+            height: 25px;
+            background: #007bff;
+            border-radius: 50% 50% 50% 0;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
             transform-origin: center;
             position: relative;
             z-index: 1000;
@@ -361,8 +361,11 @@
             position: absolute;
             top: 50%;
             left: 50%;
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
             transform: translate(-50%, -50%);
-            font-size: 16px;
         }
 
         .route-traveled {
@@ -917,21 +920,15 @@
                         else if (device.status === 'offline') markerColor = '#dc3545'; // red
                         else if (device.status === 'delayed') markerColor = '#ffc107'; // yellow
 
-                        // Create custom marker (use arrow style for better visibility)
-                        const marker = L.marker([lat, lng], {
-                            icon: L.divIcon({
-                                className: 'arrow-marker',
-                                html: '',
-                                iconSize: [25, 25],
-                                iconAnchor: [12.5, 12.5]
-                            })
+                        // Create custom marker
+                        const marker = L.circleMarker([lat, lng], {
+                            radius: 10,
+                            fillColor: markerColor,
+                            color: '#fff',
+                            weight: 2,
+                            opacity: 1,
+                            fillOpacity: 0.8
                         }).addTo(this.map);
-                        
-                        // Set marker color based on status
-                        const markerElement = marker.getElement();
-                        if (markerElement) {
-                            markerElement.style.background = markerColor;
-                        }
 
                         // Add popup with device details
                         const popupContent = this.createMarkerPopup(device);
@@ -1508,8 +1505,8 @@
                         icon: L.divIcon({
                             className: 'vehicle-marker',
                             html: '',
-                            iconSize: [40, 40],
-                            iconAnchor: [20, 20]
+                            iconSize: [25, 25],
+                            iconAnchor: [12.5, 12.5]
                         })
                     }).addTo(this.map);
                     
@@ -1540,8 +1537,12 @@
                     this.routeMarkers.push(startMarker, endMarker);
                 }
                 
-                // Fit map to route
-                this.map.fitBounds(this.remainingRoute.getBounds());
+                // Fit map to route with proper zoom
+                const bounds = this.remainingRoute.getBounds();
+                this.map.fitBounds(bounds, {
+                    padding: [20, 20],
+                    maxZoom: 15
+                });
                 
                 // Show route info and playback controls
                 this.updateRouteInfo();
@@ -1738,10 +1739,13 @@
                 // Add fading trail effect for recent path
                 this.addTrailEffect(lat, lng);
                 
-                // Smooth pan to follow vehicle
-                this.map.panTo([lat, lng], {
+                // Smooth pan to follow vehicle with consistent zoom
+                const currentZoom = this.map.getZoom();
+                const targetZoom = Math.max(currentZoom, 12); // Minimum zoom level 12
+                
+                this.map.setView([lat, lng], targetZoom, {
                     animate: true,
-                    duration: 0.15
+                    duration: 0.2
                 });
             }
 
