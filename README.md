@@ -23,13 +23,7 @@ A specialized ORBCOMM satellite tracking API server that connects to the ORBCOMM
    ```
    
    The `.env` file should contain:
-   ```env
-   NODE_ENV=development
-   PORT=3000
-   LOG_LEVEL=debug
-   ORBCOMM_WS_URL=wss://wamc.wamcentral.net:44355/cdh
-   ORBCOMM_PROTOCOL=cdh.orbcomm.com
-   ORBCOMM_AUTH=Basic Y2RoUFRTT0c6Y0QjMyNQdEAhU0BvZw==
+
    ```
 
 ## 🆕 Enhanced Features
