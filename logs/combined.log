@@ -4458,3 +4458,9 @@
 {"ip":"127.0.0.1","level":"info","message":"WebSocket authenticated for KAGU client","service":"orbcomm-api-server","timestamp":"2025-08-28T09:38:32.504Z"}
 {"apiKey":"provided","ip":"127.0.0.1","level":"info","message":"GET /api/kagu/assets/all","service":"orbcomm-api-server","timestamp":"2025-08-28T09:39:02.189Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"}
 {"duration":6,"level":"info","message":"Response: GET /kagu/assets/all","service":"orbcomm-api-server","statusCode":200,"timestamp":"2025-08-28T09:39:02.194Z"}
+{"apiKey":"provided","ip":"127.0.0.1","level":"info","message":"GET /api/kagu/assets/all","service":"orbcomm-api-server","timestamp":"2025-08-28T09:39:32.496Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"}
+{"duration":6,"level":"info","message":"Response: GET /kagu/assets/all","service":"orbcomm-api-server","statusCode":200,"timestamp":"2025-08-28T09:39:32.502Z"}
+{"apiKey":"provided","ip":"127.0.0.1","level":"info","message":"GET /api/kagu/assets/all","service":"orbcomm-api-server","timestamp":"2025-08-28T09:40:02.198Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"}
+{"duration":6,"level":"info","message":"Response: GET /kagu/assets/all","service":"orbcomm-api-server","statusCode":200,"timestamp":"2025-08-28T09:40:02.203Z"}
+{"apiKey":"provided","ip":"127.0.0.1","level":"info","message":"GET /api/kagu/assets/all","service":"orbcomm-api-server","timestamp":"2025-08-28T09:40:32.502Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"}
+{"duration":6,"level":"info","message":"Response: GET /kagu/assets/all","service":"orbcomm-api-server","statusCode":200,"timestamp":"2025-08-28T09:40:32.508Z"}
