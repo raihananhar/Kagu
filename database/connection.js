@@ -5,10 +5,10 @@ class DatabaseConnection {
   constructor() {
     this.pool = null;
     this.dbConfig = {
-      host: process.env.DATABASE_HOST || '172.28.48.1',
+      host: process.env.DATABASE_HOST || 'localhost',
       port: process.env.DATABASE_PORT || 3306,
-      user: process.env.DATABASE_USER || 'root',
-      password: process.env.DATABASE_PASSWORD || '',
+      user: process.env.DATABASE_USER || 'orbcomm_user',
+      password: process.env.DATABASE_PASSWORD || 'sog506',
       database: process.env.DATABASE_NAME || 'orbcomm_kagu',
       waitForConnections: true,
       connectionLimit: 10,
@@ -16,7 +16,6 @@ class DatabaseConnection {
       acquireTimeout: 30000,
       charset: 'utf8mb4',
       timezone: 'Z',
-      // WSL to Windows network optimizations
       connectTimeout: 20000,
       ssl: false
     };
@@ -31,7 +30,7 @@ class DatabaseConnection {
 
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
-        logger.info(`Database connection attempt ${attempt}/${maxRetries} to WSL->Windows XAMPP...`);
+        logger.info(`Database connection attempt ${attempt}/${maxRetries}...`);
         
         // First, create connection without database to check if database exists
         const tempConfig = { ...this.dbConfig };
@@ -59,7 +58,7 @@ class DatabaseConnection {
         await connection.ping();
         connection.release();
         
-        logger.info(`✅ WSL->Windows XAMPP MySQL connection established: ${this.dbConfig.host}:${this.dbConfig.port}/${this.dbConfig.database}`);
+        logger.info(`✅ MySQL connection established: ${this.dbConfig.host}:${this.dbConfig.port}/${this.dbConfig.database}`);
         this.reconnectAttempts = 0;
         return true;
         
@@ -75,23 +74,13 @@ class DatabaseConnection {
       }
     }
     
-    logger.error('All database connection attempts failed. WSL->Windows XAMPP connection could not be established.');
+    logger.error('All database connection attempts failed. MySQL connection could not be established.');
     logger.error('');
-    logger.error('🔧 XAMPP MySQL Configuration Required:');
-    logger.error('1. Open XAMPP Control Panel on Windows');
-    logger.error('2. Ensure MySQL service is running (green)');
-    logger.error('3. Click "Admin" button next to MySQL (opens phpMyAdmin)');
-    logger.error('4. Go to "User accounts" tab');
-    logger.error('5. Click "Edit privileges" for root user');
-    logger.error('6. Change "Host name" from "localhost" to "%" (any host)');
-    logger.error('7. Or add new host: 172.28.54.133 (your WSL IP)');
-    logger.error('8. Save changes and restart MySQL service');
-    logger.error('');
-    logger.error('Alternative: Create new user for WSL connections:');
-    logger.error('- Username: orbcomm_user');
-    logger.error('- Password: (leave empty or set one)');
-    logger.error('- Host: % or 172.28.54.133');
-    logger.error('- Grant all privileges on orbcomm_kagu database');
+    logger.error('🔧 MySQL Configuration Required:');
+    logger.error('1. Ensure MySQL service is running');
+    logger.error('2. Verify database credentials are correct');
+    logger.error('3. Check if database exists and user has proper permissions');
+    logger.error('4. Verify network connectivity to MySQL server');
     
     throw lastError;
   }

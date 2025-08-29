@@ -51,7 +51,7 @@ module.exports = {
       listen_timeout: 3000,
       
       // Health monitoring
-      health_check_url: 'http://localhost:3000/health',
+      health_check_url: 'http://cms.pt-sog.com/health',
       health_check_grace_period: 3000,
       
       // Source map support for better error tracking
@@ -72,7 +72,7 @@ module.exports = {
       user: 'deploy',
       host: ['staging-server.example.com'],
       ref: 'origin/staging',
-      repo: 'git@github.com:your-org/orbcomm-api-server.git',
+      repo: 'git@github.com:zean/orbcomm-api-server.git',
       path: '/var/www/orbcomm-api-staging',
       'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env staging',
       'pre-deploy-local': 'echo "Deploying to staging..."',
@@ -84,10 +84,10 @@ module.exports = {
     
     production: {
       user: 'deploy',
-      host: ['prod-server1.example.com', 'prod-server2.example.com'],
+      host: ['103.121.197.174'],
       ref: 'origin/main',
-      repo: 'git@github.com:your-org/orbcomm-api-server.git',
-      path: '/var/www/orbcomm-api-production',
+      repo: 'git@github.com:zean/orbcomm-api-server.git',
+      path: '/var/www/orbcomm-api-server',
       'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production',
       'pre-deploy-local': 'echo "Deploying to production..."',
       'post-deploy-local': 'echo "Deployed to production successfully"',
