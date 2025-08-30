@@ -13,7 +13,6 @@ class DatabaseConnection {
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0,
-      acquireTimeout: 30000,
       charset: 'utf8mb4',
       timezone: 'Z',
       connectTimeout: 20000,

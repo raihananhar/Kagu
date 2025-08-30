@@ -6,10 +6,10 @@ module.exports = {
       instances: process.env.PM2_INSTANCES || 'max',
       exec_mode: 'cluster',
       env: {
-        NODE_ENV: 'development',
+        NODE_ENV: 'production',
         PORT: 3000,
         HOST: '0.0.0.0',
-        LOG_LEVEL: 'info'
+        LOG_LEVEL: 'warn'
       },
       env_staging: {
         NODE_ENV: 'staging',
@@ -51,7 +51,7 @@ module.exports = {
       listen_timeout: 3000,
       
       // Health monitoring
-      health_check_url: 'http://cms.pt-sog.com/health',
+      health_check_url: 'http://localhost:3000/health',
       health_check_grace_period: 3000,
       
       // Source map support for better error tracking
@@ -72,7 +72,7 @@ module.exports = {
       user: 'deploy',
       host: ['staging-server.example.com'],
       ref: 'origin/staging',
-      repo: 'git@github.com:zean/orbcomm-api-server.git',
+      repo: 'git@github.com:raihananhar/Kagu.git',
       path: '/var/www/orbcomm-api-staging',
       'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env staging',
       'pre-deploy-local': 'echo "Deploying to staging..."',
@@ -86,7 +86,7 @@ module.exports = {
       user: 'deploy',
       host: ['103.121.197.174'],
       ref: 'origin/main',
-      repo: 'git@github.com:zean/orbcomm-api-server.git',
+      repo: 'git@github.com:raihananhar/Kagu.git',
       path: '/var/www/orbcomm-api-server',
       'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production',
       'pre-deploy-local': 'echo "Deploying to production..."',
