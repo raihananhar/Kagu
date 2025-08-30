@@ -592,9 +592,10 @@ class OrbcommClient {
       // Extract event types from Events array
       const eventTypes = [];
       if (messageData.Events && Array.isArray(messageData.Events)) {
-        messageData.Events.forEach(evt => {
-          if (evt.EventType) {
-            eventTypes.push(evt.EventType);
+        messageData.Events.forEach(eventType => {
+          // Events array contains event type strings directly
+          if (eventType && typeof eventType === 'string') {
+            eventTypes.push(eventType);
           }
         });
       }
@@ -683,6 +684,7 @@ class OrbcommClient {
           // Reefer status and alarms
           alarmCode: reeferData.AlarmCode,
           alarmStatus: reeferData.AlarmStatus,
+          reeferAlarms: reeferData.ReeferAlarms || (reeferData.AlarmCode ? [reeferData.AlarmCode] : []),
           operatingMode: reeferData.OperatingMode,
           defrostStatus: reeferData.DefrostStatus,
           compressorStatus: reeferData.CompressorStatus,
@@ -887,6 +889,29 @@ class OrbcommClient {
           case 'HEARTBEAT': return 'Heartbeat';
           case 'MOTION_START': return 'Motion started';
           case 'MOTION_STOP': return 'Motion stopped';
+          
+          // Additional ORBCOMM event types
+          case 'ENGINE_ON': return 'Engine on';
+          case 'ENGINE_OFF': return 'Engine off';
+          case 'IGNITION_ON': return 'Ignition on';
+          case 'IGNITION_OFF': return 'Ignition off';
+          case 'PANIC': return 'Panic button';
+          case 'SOS': return 'SOS emergency';
+          case 'OVERSPEED': return 'Overspeed alert';
+          case 'HARSH_BRAKE': return 'Harsh braking';
+          case 'HARSH_ACCEL': return 'Harsh acceleration';
+          case 'DEVICE_ON': return 'Device powered on';
+          case 'DEVICE_OFF': return 'Device powered off';
+          case 'MAINTENANCE': return 'Maintenance required';
+          case 'FUEL_LOW': return 'Low fuel';
+          case 'BATTERY_LOW': return 'Low battery';
+          case 'VOLTAGE_LOW': return 'Low voltage';
+          case 'VOLTAGE_HIGH': return 'High voltage';
+          case 'TEMP_HIGH': return 'High temperature';
+          case 'TEMP_LOW': return 'Low temperature';
+          case 'HUMIDITY_HIGH': return 'High humidity';
+          case 'HUMIDITY_LOW': return 'Low humidity';
+          
           default: return eventType;
         }
       });
@@ -923,6 +948,31 @@ class OrbcommClient {
     }
     
     return descriptions.join(', ');
+  }
+
+  parseAlarmDescription(alarmCode) {
+    // Parse alarm codes to friendly descriptions
+    if (!alarmCode) return null;
+    
+    switch (alarmCode.toString().toUpperCase()) {
+      case 'TEMP_HIGH': case 'TH': return 'High temperature alarm';
+      case 'TEMP_LOW': case 'TL': return 'Low temperature alarm';
+      case 'HUMIDITY_HIGH': case 'HH': return 'High humidity alarm';
+      case 'HUMIDITY_LOW': case 'HL': return 'Low humidity alarm';
+      case 'DOOR_OPEN': case 'DO': return 'Door open alarm';
+      case 'POWER_FAIL': case 'PF': return 'Power failure alarm';
+      case 'LOW_BATTERY': case 'LB': return 'Low battery alarm';
+      case 'COMPRESSOR_FAIL': case 'CF': return 'Compressor failure';
+      case 'SENSOR_FAIL': case 'SF': return 'Sensor failure';
+      case 'DEFROST_ALARM': case 'DA': return 'Defrost alarm';
+      case 'ENGINE_ALARM': case 'EA': return 'Engine alarm';
+      case 'MAINTENANCE': case 'MT': return 'Maintenance alarm';
+      case 'OVERSPEED': case 'OS': return 'Overspeed alarm';
+      case 'GEOFENCE': case 'GF': return 'Geofence violation';
+      case 'PANIC': case 'PN': return 'Panic alarm';
+      case 'SOS': return 'SOS emergency alarm';
+      default: return `Alarm: ${alarmCode}`;
+    }
   }
 }
 
