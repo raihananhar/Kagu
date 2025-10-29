@@ -699,10 +699,10 @@ router.get('/kagu/asset/:ASSET_ID/events',
           device: event.deviceTimestamp,
           received: event.receivedTimestamp
         },
-        location: event.gpsData?.hasGPS ? {
-          latitude: event.gpsData.latitude,
-          longitude: event.gpsData.longitude
-        } : null,
+        location: {
+          latitude: event.gpsData?.hasGPS ? event.gpsData.latitude : null,
+          longitude: event.gpsData?.hasGPS ? event.gpsData.longitude : null
+        },
         reeferAlarms: event.reeferData?.alarmCode ? {
           code: event.reeferData.alarmCode,
           status: event.reeferData.alarmStatus
@@ -824,18 +824,18 @@ router.get('/kagu/asset/:ASSET_ID/history',
           eventTime: row.event_time,
           deviceTime: row.device_time,
           receivedTime: row.received_time,
-          location: row.latitude && row.longitude ? {
-            latitude: parseFloat(row.latitude),
-            longitude: parseFloat(row.longitude),
-            gpsLockState: row.gps_lock_state,
-            satelliteCount: row.satellite_count
-          } : null,
-          temperature: row.ambient ? {
-            ambient: parseFloat(row.ambient),
-            setpoint: parseFloat(row.setpoint),
-            supply1: parseFloat(row.supply1),
-            return1: parseFloat(row.return1)
-          } : null
+          location: {
+            latitude: row.latitude ? parseFloat(row.latitude) : null,
+            longitude: row.longitude ? parseFloat(row.longitude) : null,
+            gpsLockState: row.gps_lock_state || null,
+            satelliteCount: row.satellite_count || null
+          },
+          temperature: {
+            ambient: row.ambient ? parseFloat(row.ambient) : null,
+            setpoint: row.setpoint ? parseFloat(row.setpoint) : null,
+            supply1: row.supply1 ? parseFloat(row.supply1) : null,
+            return1: row.return1 ? parseFloat(row.return1) : null
+          }
         })),
         period: {
           days: parseInt(days),
