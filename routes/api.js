@@ -835,7 +835,22 @@ router.get('/kagu/asset/:ASSET_ID/history',
             setpoint: row.setpoint ? parseFloat(row.setpoint) : null,
             supply1: row.supply1 ? parseFloat(row.supply1) : null,
             return1: row.return1 ? parseFloat(row.return1) : null
-          }
+          },
+          deviceData: {
+            extPower: row.ext_power !== null ? Boolean(row.ext_power) : null,
+            extPowerVoltage: row.ext_power_voltage ? parseFloat(row.ext_power_voltage) : null,
+            batteryVoltage: row.battery_voltage ? parseFloat(row.battery_voltage) : null,
+            deviceTemp: row.device_temp ? parseFloat(row.device_temp) : null,
+            rssi: row.rssi || null
+          },
+          alarms: row.alarms && row.alarms.length > 0 ? row.alarms.map(alarm => ({
+            code: alarm.alarm_code,
+            status: alarm.alarm_status,
+            type: alarm.alarm_type,
+            severity: alarm.severity,
+            description: alarm.description,
+            timestamp: alarm.timestamp
+          })) : null
         })),
         period: {
           days: parseInt(days),
@@ -1381,10 +1396,10 @@ function convertToXML(data) {
 // New CSV conversion helpers for database endpoints
 function convertHistoryToCSV(data) {
   if (!data || data.length === 0) return '';
-  
-  const headers = ['id', 'sequenceId', 'eventType', 'eventTime', 'deviceTime', 'receivedTime', 'latitude', 'longitude', 'gpsLockState', 'satelliteCount', 'ambient', 'setpoint', 'supply1', 'return1'];
+
+  const headers = ['id', 'sequenceId', 'eventType', 'eventTime', 'deviceTime', 'receivedTime', 'latitude', 'longitude', 'gpsLockState', 'satelliteCount', 'ambient', 'setpoint', 'supply1', 'return1', 'extPower', 'extPowerVoltage', 'batteryVoltage', 'deviceTemp', 'rssi', 'alarmCodes', 'alarmDescriptions', 'alarmSeverity'];
   const csvRows = [headers.join(',')];
-  
+
   data.forEach(row => {
     const values = headers.map(header => {
       let value = '';
@@ -1403,12 +1418,26 @@ function convertHistoryToCSV(data) {
         case 'setpoint': value = row.temperature?.setpoint || ''; break;
         case 'supply1': value = row.temperature?.supply1 || ''; break;
         case 'return1': value = row.temperature?.return1 || ''; break;
+        case 'extPower': value = row.deviceData?.extPower !== null ? row.deviceData.extPower : ''; break;
+        case 'extPowerVoltage': value = row.deviceData?.extPowerVoltage || ''; break;
+        case 'batteryVoltage': value = row.deviceData?.batteryVoltage || ''; break;
+        case 'deviceTemp': value = row.deviceData?.deviceTemp || ''; break;
+        case 'rssi': value = row.deviceData?.rssi || ''; break;
+        case 'alarmCodes':
+          value = row.alarms ? row.alarms.map(a => a.code).join('; ') : '';
+          break;
+        case 'alarmDescriptions':
+          value = row.alarms ? row.alarms.map(a => a.description).join('; ') : '';
+          break;
+        case 'alarmSeverity':
+          value = row.alarms ? row.alarms.map(a => a.severity).join('; ') : '';
+          break;
       }
       return `"${value}"`;
     });
     csvRows.push(values.join(','));
   });
-  
+
   return csvRows.join('\n');
 }
 
