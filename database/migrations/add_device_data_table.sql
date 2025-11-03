@@ -20,10 +20,10 @@ CREATE TABLE IF NOT EXISTS `device_data` (
   CONSTRAINT `fk_device_data_event` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Add index for faster queries
-CREATE INDEX IF NOT EXISTS idx_asset_timestamp ON device_data(asset_id, timestamp);
+-- Add index for faster queries (check if exists first)
+CREATE INDEX idx_asset_timestamp ON device_data(asset_id, timestamp);
 
 -- Add GPS quality columns to locations table
 ALTER TABLE `locations`
-  ADD COLUMN IF NOT EXISTS `gps_lock_state` varchar(20) DEFAULT NULL AFTER `longitude`,
-  ADD COLUMN IF NOT EXISTS `satellite_count` int(11) DEFAULT NULL AFTER `gps_lock_state`;
+  ADD COLUMN `gps_lock_state` varchar(20) DEFAULT NULL AFTER `longitude`,
+  ADD COLUMN `satellite_count` int(11) DEFAULT NULL AFTER `gps_lock_state`;

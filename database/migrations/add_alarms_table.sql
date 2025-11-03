@@ -23,5 +23,5 @@ CREATE TABLE IF NOT EXISTS `alarms` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Add index for faster alarm queries
-CREATE INDEX IF NOT EXISTS idx_asset_alarm_timestamp ON alarms(asset_id, alarm_status, timestamp);
-CREATE INDEX IF NOT EXISTS idx_alarm_type_severity ON alarms(alarm_type, severity);
+CREATE INDEX idx_asset_alarm_timestamp ON alarms(asset_id, alarm_status, timestamp);
+CREATE INDEX idx_alarm_type_severity ON alarms(alarm_type, severity);
