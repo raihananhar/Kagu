@@ -850,7 +850,14 @@ router.get('/kagu/asset/:ASSET_ID/history',
             severity: alarm.severity,
             description: alarm.description,
             timestamp: alarm.timestamp
-          })) : null
+          })) : [{
+            code: null,
+            status: null,
+            type: null,
+            severity: null,
+            description: null,
+            timestamp: null
+          }]
         })),
         period: {
           days: parseInt(days),
