@@ -682,7 +682,8 @@
                 // Expected KAGU assets
                 this.expectedAssets = [
                     'TRIU8784787', 'KAGU3330950', 'KAGU3330820', 'SZLU9721417', 'SZLU3961914',
-                    'KAGU3331180', 'KAGU3331339', 'KAGU3331283', 'KAGU7771228', 'KAGU3331302'
+                    'KAGU3331180', 'KAGU3331339', 'KAGU3331283', 'KAGU7771228', 'KAGU3331302',
+                    'CAAU4035576'
                 ];
 
                 this.init();
@@ -792,7 +793,7 @@
             }
 
             connectWebSocket() {
-                const wsUrl = `ws://103.121.197.174/ws/kagu?apiKey=api_key_kagu_12345`;
+                const wsUrl = `ws://localhost:3000/ws/kagu?apiKey=api_key_kagu_12345`;
                 
                 try {
                     this.websocket = new WebSocket(wsUrl);
