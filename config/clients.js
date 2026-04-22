@@ -2,7 +2,7 @@ const clients = {
   'KAGU': {
     name: 'KAGU Client',
     apiKey: 'api_key_kagu_12345',
-    assetPatterns: ['KAGU*', 'SZLU*', 'TRIU*'], // Assets starting with KAGU, SZLU, or TRIU
+    assetPatterns: ['KAGU*', 'SZLU*', 'TRIU*', 'CAAU*'], // Assets starting with KAGU, SZLU, TRIU, or CAAU
     specificAssets: [
       'TRIU8784787',
       'KAGU3330950',
@@ -13,9 +13,10 @@ const clients = {
       'KAGU3331339',
       'KAGU3331283',
       'KAGU7771228',
-      'KAGU3331302'
+      'KAGU3331302',
+      'CAAU4035576'
     ],
-    totalAssets: 10, // 7x KAGU + 2x SZLU + 1x TRIU assets
+    totalAssets: 11, // 7x KAGU + 2x SZLU + 1x TRIU + 1x CAAU assets
     rateLimit: {
       windowMs: 15 * 60 * 1000, // 15 minutes
       max: 2000 // limit to 2000 requests per windowMs
